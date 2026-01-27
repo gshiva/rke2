@@ -249,7 +249,7 @@ func (p *PEBinaryConfig) KubeProxy(ctx context.Context, args []string) error {
 		outputFile := logging.GetLogger(filepath.Join(p.DataDir, "agent", "logs", "kube-proxy.log"), 50)
 		for {
 			logrus.Infof("Running RKE2 kube-proxy %s", args)
-			cmd := exec.CommandContext(ctx, filepath.Join("c:\\", p.DataDir, "bin", "kube-proxy.exe"), args...)
+			cmd := exec.CommandContext(ctx, filepath.Join(p.DataDir, "bin", "kube-proxy.exe"), args...)
 			cmd.Stdout = outputFile
 			cmd.Stderr = outputFile
 			err := cmd.Run()
@@ -509,6 +509,6 @@ func getCNIPluginName(restConfig *rest.Config) (string, error) {
 
 // setWindowsAgentSpecificSettings configures the correct paths needed for Windows
 func setWindowsAgentSpecificSettings(dataDir string, nodeConfig *config.Node) {
-	nodeConfig.AgentConfig.CNIBinDir = filepath.Join("c:\\", dataDir, "bin")
-	nodeConfig.AgentConfig.CNIConfDir = filepath.Join("c:\\", dataDir, "agent", "etc", "cni")
+	nodeConfig.AgentConfig.CNIBinDir = filepath.Join(dataDir, "bin")
+	nodeConfig.AgentConfig.CNIConfDir = filepath.Join(dataDir, "agent", "etc", "cni")
 }
